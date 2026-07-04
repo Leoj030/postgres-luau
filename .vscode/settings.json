@@ -1,0 +1,9 @@
+{
+  "luau-lsp.types.definitionFiles": {
+    "zune": ".zune/zune.d.luau",
+    "pg": ".zune/pg.d.luau"
+  },
+  "luau-lsp.types.documentationFiles": [
+    ".zune/zune.d.json"
+  ]
+}   
