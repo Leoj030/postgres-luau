@@ -13,7 +13,7 @@ local PGRES_COMMAND_OK = 1
 local PGRES_TUPLES_OK = 2
 local POINTER_SIZE = 8 -- 64-bit target
 
-local lib = ffi.dlopen(`libpq.so.5`, {
+local lib = ffi.dlopen(`./external/linux-x64/libpq.so.5`, {
     PQconnectdb = { returns = ffi.types.pointer, args = { ffi.types.pointer } },
     PQstatus = { returns = ffi.types.i32, args = { ffi.types.pointer } },
     PQerrorMessage = { returns = ffi.types.pointer, args = { ffi.types.pointer } },
@@ -53,7 +53,7 @@ local function readCString(ptr: FFIPointer): string
     return buffer.readstring(buf, 0, offset)
 end
 
--- Shared by pg.exec and pg.query: turns a PGresult* into our QueryOutcome shape.
+-- Shared by _execRaw and pg.query: turns a PGresult* into our QueryOutcome shape.
 -- Always clears the result before returning, so callers never have to remember to.
 local function readResult(res: FFIPointer): QueryOutcome
     local status = lib.PQresultStatus(res)
